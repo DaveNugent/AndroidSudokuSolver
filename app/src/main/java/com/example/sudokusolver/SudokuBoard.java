@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -12,8 +13,14 @@ import androidx.annotation.Nullable;
 public class SudokuBoard extends View {
 
     private final int boardColor;
+    private final int selectedCellColor;
+    private final int highLightColor;
     private final Paint boardColorPaint = new Paint();
-    int cellSize = 5;
+    private final Paint selectedCellColorPaint = new Paint();
+    private final Paint highLightColorPaint = new Paint();
+    int cellSize;
+
+    private final Solver solver = new Solver();
 
     public SudokuBoard(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -22,6 +29,8 @@ public class SudokuBoard extends View {
 
         try {
             boardColor = attribs.getInteger(R.styleable.SudokuBoard_boardColor, 0);
+            selectedCellColor = attribs.getInteger(R.styleable.SudokuBoard_selectedCellColor, 0);
+            highLightColor = attribs.getInteger(R.styleable.SudokuBoard_highLightColor, 0);
         } finally {
             attribs.recycle();
         }
@@ -42,6 +51,15 @@ public class SudokuBoard extends View {
         boardColorPaint.setColor(boardColor);
         boardColorPaint.setAntiAlias(true);
 
+        selectedCellColorPaint.setStyle(Paint.Style.FILL);
+        selectedCellColorPaint.setColor(selectedCellColor);
+        selectedCellColorPaint.setAntiAlias(true);
+
+        highLightColorPaint.setStyle(Paint.Style.FILL);
+        highLightColorPaint.setColor(highLightColor);
+        highLightColorPaint.setAntiAlias(true);
+
+        highLightCell(canvas, solver.getSelectedRow(), solver.getSelectedCol());
         canvas.drawRect(0, 0, getWidth(), getHeight(), boardColorPaint);
         drawBoard(canvas);
     }
@@ -49,9 +67,6 @@ public class SudokuBoard extends View {
     private void drawBoard(Canvas canvas){
         final int THIN_LINE = 4;
         final int THICK_LINE = 10;
-
-        boardColorPaint.setStyle(Paint.Style.STROKE);
-        boardColorPaint.setColor(boardColor);
 
         // Draw all columns
         for (int col = 0; col < 10; col++){
@@ -77,5 +92,37 @@ public class SudokuBoard extends View {
                     cellSize * row, boardColorPaint);
         }
 
+    }
+
+    private void highLightCell(Canvas canvas, int row, int col){
+        if(solver.getSelectedRow() != -1 && solver.getSelectedCol() != -1){
+            canvas.drawRect((col - 1) * cellSize, 0, col * cellSize,
+                    cellSize * 9, highLightColorPaint);
+
+            canvas.drawRect(0, (row - 1) * cellSize, cellSize * 9,
+                    row * cellSize, highLightColorPaint);
+
+
+            canvas.drawRect((col - 1) * cellSize, (row - 1) * cellSize, col * cellSize,
+                    row * cellSize, selectedCellColorPaint);
+        }
+        invalidate();
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event){
+        boolean isValid = false;
+
+        float x = event.getX();
+        float y = event.getY();
+        int action = event.getAction();
+
+        if (action == MotionEvent.ACTION_DOWN) {
+            solver.setSelectedRow((int)Math.ceil(y/cellSize));
+            solver.setSelectedCol((int)Math.ceil(x/cellSize));
+            isValid = true;
+        }
+
+        return isValid;
     }
 }
