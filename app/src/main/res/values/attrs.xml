@@ -4,5 +4,6 @@
         <attr name="boardColor" format="color"/>
         <attr name="selectedCellColor" format="color"/>
         <attr name="highLightColor" format="color"/>
+        <attr name="numberColor" format="color"/>
     </declare-styleable>
 </resources>

@@ -9,17 +9,105 @@
     tools:context=".MainActivity">
 
     <com.example.sudokusolver.SudokuBoard
-        android:background="@color/white"
         android:id="@+id/SudokuBoard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         custom:boardColor="#000000"
-        custom:highLightColor="#6600DDFF"
-        custom:selectedCellColor="#2600DDFF"
-        custom:layout_constraintBottom_toBottomOf="parent"
+        custom:highLightColor="#F6F3D9"
+        custom:numberColor="@color/black"
+        custom:layout_constraintBottom_toTopOf="@+id/tableLayout"
         custom:layout_constraintEnd_toEndOf="parent"
         custom:layout_constraintStart_toStartOf="parent"
-        custom:layout_constraintTop_toTopOf="parent">
-    </com.example.sudokusolver.SudokuBoard>
+        custom:layout_constraintTop_toTopOf="parent"
+        custom:selectedCellColor="#FFEB3B"></com.example.sudokusolver.SudokuBoard>
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        custom:layout_constraintBottom_toBottomOf="parent"
+        custom:layout_constraintEnd_toEndOf="parent"
+        custom:layout_constraintStart_toStartOf="parent">
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="140dp"
+                android:layout_height="80dp"
+                android:onClick="buttonOnePress"
+                android:text="1" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="140dp"
+                android:layout_height="80dp"
+                android:onClick="buttonTwoPress"
+                android:text="2" />
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="140dp"
+                android:layout_height="80dp"
+                android:onClick="buttonThreePress"
+                android:text="3" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/button4"
+                android:layout_width="140dp"
+                android:layout_height="80dp"
+                android:onClick="buttonFourPress"
+                android:text="4" />
+
+            <Button
+                android:id="@+id/button5"
+                android:layout_width="140dp"
+                android:layout_height="80dp"
+                android:onClick="buttonFivePress"
+                android:text="5" />
+
+            <Button
+                android:id="@+id/button6"
+                android:layout_width="140dp"
+                android:layout_height="80dp"
+                android:onClick="buttonSixPress"
+                android:text="6" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/button7"
+                android:layout_width="140dp"
+                android:layout_height="80dp"
+                android:onClick="buttonSevenPress"
+                android:text="7" />
+
+            <Button
+                android:id="@+id/button8"
+                android:layout_width="140dp"
+                android:layout_height="80dp"
+                android:onClick="buttonEightPress"
+                android:text="8" />
+
+            <Button
+                android:id="@+id/button9"
+                android:layout_width="140dp"
+                android:layout_height="80dp"
+                android:onClick="buttonNinePress"
+                android:text="9" />
+        </TableRow>
+
+    </TableLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
